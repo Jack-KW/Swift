@@ -1,12 +1,12 @@
 ## Add padding to text
 
-Control margins and paddings is essential for text rendering on iPhone or iPad as we don't want text be too close to the edges of the device.
+Controlling margins or paddings is essential for text rendering on iPhone or iPad as we don't want the text to be too close to the device's edges.
 
-But I couldn't found any clew about how to set a proper margin or padding after went through many TextKit related documents. The words I got related most is
+But I couldn't find any direct explanation or example about setting a proper margin or padding after going through many TextKit related documents. The words I got related most is
 
 > Line fragment padding is not designed to express text margins. Instead, you should use insets on your text view, adjust the paragraph margin attributes, or change the position of the text view within its superview.
 
-Also, in the example project of the 2021 WWDC video *Meet TextKit 2*, TextKit team used a property of CALayer to control padding:
+Also, in the example project of the 2021 WWDC video *Meet TextKit 2*, the TextKit team used a property of CALayer to control padding:
 
 ```swift
 class TextLayoutFragmentLayer: CALayer {
@@ -30,9 +30,9 @@ class TextLayoutFragmentLayer: CALayer {
 }
 ```
 
-Since I didn't found any better solution than the above one, I temporarily adopted it in my app.
+Since I didn't find any better solution than the above, I temporarily adopted it in my app.
 
-The padding is set in the view controller:
+The padding value is set in the view controller:
 
 ```swift
 class TextDocumentViewController {

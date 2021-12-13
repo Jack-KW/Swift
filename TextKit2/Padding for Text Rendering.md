@@ -46,7 +46,7 @@ class TextDocumentViewController {
 }
 ```
 
-This padding value is then passed to the TextLayoutFragmentLayer when it is created:
+This padding value is then passed to the TextLayoutFragmentLayer when it is created in textDocumentView:
 
 ```swift
 let layer = TextLayoutFragmentLayer(layoutFragment: textLayoutFragment,

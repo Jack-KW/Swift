@@ -1,8 +1,9 @@
 ## Sort a dictionary by Int keys
+The result is an array of all the items in the given dictionary, which sorted by their Int keys.
 ```swift
 let aDictionary: [Int: Any] = [1: 0, 3: 5, -6: 9, -9: 2]
-let sortedDictionary = aDictionary.sorted(by: { $0.0 < $1.0 })
-print(sortedDictionary)
+let arrayOfDictionaryItems = aDictionary.sorted(by: { $0.0 < $1.0 })
+print(arrayOfDictionaryItems)
 ```
 printed result
 ```

@@ -1,6 +1,6 @@
 ## Add padding to text
 
-Control margins and paddings is essential for text rendering on iPhone or iPad as we don't want text is to close to the edges of the device.
+Control margins and paddings is essential for text rendering on iPhone or iPad as we don't want text be too close to the edges of the device.
 
 But I couldn't found any clew about how to set a proper margin or padding after went through many TextKit related documents. The words I got related most is
 

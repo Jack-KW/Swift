@@ -87,4 +87,4 @@ private func jumpToLocation(_ targetLocation: Int) {
             
 ```
 
-paragraphRangeForLocation(_ location: Int) is an utility function that fetch paragraph range collected during textContentStorage create NStextParagraph object.
+paragraphRangeForLocation(_ location: Int) is an utility function that fetch paragraph range collected during textContentStorage creates NStextParagraph object.

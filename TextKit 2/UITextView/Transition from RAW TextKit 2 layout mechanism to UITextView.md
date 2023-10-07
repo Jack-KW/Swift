@@ -4,6 +4,8 @@ Before WWDC 2022, my App worked fine based on the raw TextKit 2 components. When
 
 Compared with the raw TextKit 2 layout, rendering text on UITextView is much easier. However, free meals do not always taste great. The trade-off of implementing UITextView is that you must hand over the full-text rendering control to this view. One very important rendering control for a reading app like mine is scrollRangeToVisible.
 
+# Jump to any location in the document
+
 My solution without UITextView allows me to smoothly scroll the view to any location in huge documents, though the control is very complicated. However, on the TextKit 2 enabled UITextView side, the scrollRangeToVisible(_range: NSRange) function on iOS 16 was unreliable. It not only scrolls to some wrong locations but can also scroll to some random places in a blank background, which absolutely leads to user frustration. So, I had to spend a few weeks experimenting with the mechanism behind the scrollRangeToVisible function and redesign my app to cooperate with it to ensure a smooth user experience.
 
 During the transition, iOS 17 was just released. I didn't test whether the scrollRangeToVisible is working well on iOS 17. However, as I want to provide the best user experience to my users, I decided to implement the transition based on iOS 16 instead of iOS 17. That means I must solve the scrollRangeToVisible problem.
@@ -88,3 +90,19 @@ private func jumpToLocation(_ targetLocation: Int) {
 ```
 
 paragraphRangeForLocation(_ location: Int) is an utility function that fetch paragraph range collected during textContentStorage creates NStextParagraph object.
+
+# Don't touch the text on the fly -- process first, reset after update
+
+After you assign any text to the UITextView, you’d better not touch it or not touch it at least when the view is scrolling, especially in iOS 16. Otherwise, you may experience some “turbulences” - the scroll will move to any place unexpectedly. It may caused by the inconsistency between the re-layout and the auto-scrolling for re-layout. 
+
+Therefore, I update any text for styling before I attach it to the UITextView. Again, I wish the UITextView offers more powerful compatibility for updating text on the fly. Why do I wish so? Because in my RAW TextKit 2 solution, I did achieve that. It's a pity to give up the smooth update text on-the-fly compatibility, which leads better user experience.
+
+In the transition, the most impacted function in my app is font change. When a user initiates a font change, which updates font name or size, I need to process the text on display for the change first, then assign the updated text to the UITextView. The full solution is like this:
+
+1. Update the last reading location.
+2. Make a mutable copy of the text content on the display.
+3. Update fonts in the mutable copy based on the user's request.
+4. Set the content offset of the UITextView to (0, 0). *this step is quite important. It must be done before the jump.*
+5. Assign the updated mutable attributed string to the UITextView.attributedText.
+6. Use the Task.sleep() function to wait for about 0.3 seconds, allowing the re-layout to complete.
+7. Jump to the last reading location.

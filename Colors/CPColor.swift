@@ -16,7 +16,7 @@ extension CPColor {
     // **Note**: There is a tiny update from the original copy. In var LAB, I updated pow(c, 1/3) to pow(c, Double(1)/3) 
   
     // To test the performance of this CIEDE2000 implementation, I wrote a UI to use this extension to compare different
-    // colors. The result is promising.
+    // colors, which is in the same directory containing this file. The result is promising.
     
     /**
         Detemine the distance between two colors based on the way humans perceive them.
